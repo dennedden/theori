@@ -429,3 +429,51 @@
 #
 # app = App()
 # from googletrans import Translator  # Googletrans = дополнение гугл переводчик# row = строка# column = столб# pad = отступ
+laudfohhfolhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+# import tkinter
+# import subprocess
+# import webbrowser
+# from PIL import Image, ImageTk
+#
+# class LauncherApp(tkinter.Tk):
+#     def __init__(self):
+#         super().__init__()
+#
+#         self.window_settings()
+#         self.setup_icons()
+#         self.setup_ui()
+#
+#     def window_settings(self):
+#         self.title('launcher App')
+#         self.resizable(width=False, height=False)
+#
+#     def setup_icons(self):
+#         """
+#         Создание икон
+#         :return:
+#         """
+#         self.notepad_icon = Image.open("images/блокнот.jpg")
+#         self.notepad_icon = self.notepad_icon.resize((40, 40))
+#         self.notepad_icon_tk = ImageTk.PhotoImage(self.notepad_icon)
+#
+#     def create_button(self, text, image, action, action_args, row, column):
+#         button = tkinter.Button(self, text=text, image=image, compound='left', font=('Arial', 12),
+#                                 command=lambda: action(action_args))
+#         button.grid(row=row, column=column, padx=5, pady=5, sticky='we', ipadx=5)
+#         return button
+#
+#     def run_program(self, program_path: str):
+#         subprocess.Popen(program_path)
+#
+#     def setup_ui(self):
+#         apps_label = tkinter.Label(self, text="приложениR", font=('Arial', 16))
+#         apps_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
+#
+#         notepad_button = self.create_button(text='Блокнот', image=self.notepad_icon_tk, action=self.run_program,
+#                                             action_args="notepad.exe", row=1, column=0)
+#
+#
+# if __name__ == '__main__':
+#     app = LauncherApp()
+#     app.mainloop()
+#
