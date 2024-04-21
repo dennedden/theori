@@ -477,3 +477,220 @@ laudfohhfolhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 #     app = LauncherApp()
 #     app.mainloop()
 #
+# import tkinter
+# import datetime
+# 
+# 
+# class TicTacToe(tkinter.Tk):
+#     def __init__(self):
+#         super().__init__()
+# 
+#         self.settings()
+#         self.statistics_labels()
+#         self.menu()
+#         self.new_game()
+# 
+#     def settings(self):
+#         self.title('крестики нолики')
+#         self.current_player = 'X'  # появился я
+#         self.buttens = []  # списоккнопок
+#         self.board = [
+#             [None, None, None],
+#             [None, None, None],  # большо количество None -поле. изначально пустое
+#             [None, None, None],
+#         ]
+# 
+#     def menu(self):
+#         self.menu_bar = tkinter.Menu(self)
+#         self.config(menu=self.menu_bar)  # появление меню воснов окне
+# 
+#     def statistics_labels(self):
+#         """
+# 
+#         :param self:
+#         :return:
+#         """
+#         self.player_1_label = tkinter.Label(self, text="игрок O: 0")
+#         self.player_1_label.grid(row=0, column=0, )
+# 
+#         self.player_2_label = tkinter.Label(self, text="игрок O: 0")
+#         self.player_2_label.grid(row=0, column=1, )
+# 
+#     def update_scores(self):
+#         """
+#         обновление сщёта
+#         :param self:
+#         :return:
+#         """
+#         player_1_score = self.get_player_score('X')  # получение значения сщота
+#         player_2_score = self.get_player_score('O')  # получение значения сщота
+# 
+#         self.player_1_label.config(text=f'Игрок X: {player_1_score}')
+#         self.player_2_label.config(text=f'Игрок O: {player_2_score}')
+# 
+#     def new_game(self):
+#         """
+#         начало новой игры
+#         :return:
+#         """
+#         self.buttens.clear()
+#         self.board = [
+#             [None, None, None],
+#             [None, None, None],  # большо количество None - поле. изначально пустое
+#             [None, None, None],
+#         ]
+#         for row in range(3):
+#             button_row = list()  # список кнопок для каждой строки
+#             for col in range(3):
+#                 button = tkinter.Button(self, text="", width=5, height=2,
+#                                         command=lambda row=row, col=col: self.on_button_click(row, col))
+#                 button.grid(row=row + 1, column=col,
+#                             sticky="nsew")  # nsew = north,south,east,west = север,юг,восток,запад
+#                 button_row.append(button)
+# 
+#             self.buttens.append(button_row)  # нгаполнение всех кнопок тремя строками кнопак
+#         self.update_scores()  # обнова счета
+# 
+#     def on_button_click(self, row, col):
+#         """
+#         обработка
+#         :param row: номер строки
+#         :param col: номер столба
+#         :return:
+#         """
+#         if self.board[row][col] is None:  # проверка занятости ячейки
+#             self.board[row][col] = self.current_player  # заполнение ячейку играком
+#             self.buttens[row][col].config(text=self.current_player)  # обно текст на кнопке
+# 
+#             if self.check_win():  # проверка победы
+#                 self.disable_buttons()  # отключаем кнопки
+#             elif self.check_draw():  # проверка на ничью
+#                 self.disable_buttons()  # смена игрока
+#             else:
+#                 self.toggle_player()
+# 
+#     def toggle_player(self):
+#         """
+#         смена игрока
+#         :return:
+#         """
+#         if self.current_player == 'X':
+#             self.current_player = 'O'
+#         else:
+#             self.current_player = 'X'
+# 
+#     def check_draw(self):
+#         """
+#         роверка на ничью
+#         :return:
+#         """
+#         for row in self.board:
+#             for cell in row:
+#                 if cell is None:
+#                     return False  # если 1 ячейка пуста то то возращаем False
+#         return True
+# 
+#     def disable_buttons(self):
+#         """
+#         тключение кнопак
+#         :return:
+#         """
+#         for row in self.buttens:
+#             for buttens in row:
+#                 buttens.config(state=tkinter.DISABLED)
+# 
+#     def highlight_winner(self, row1, col1, row2, col2, row3, col3):
+#         """
+#         окрашиваем побед линии
+#         :param row1:
+#         :param col1:
+#         :param row2:
+#         :param col2:
+#         :param row3:
+#         :param col3:
+#         :return:
+#         """
+#         self.buttens[row1][col1].config(bg='green')
+#         self.buttens[row2][col2].config(bg='green')
+#         self.buttens[row3][col3].config(bg='green')
+# 
+#     def check_win(self):
+#         """
+#         провнрка победы
+#         :return:
+#         """
+# 
+#         for i in range(3):
+#             if self.board[i][0] == self.board[i][1] == self.board[i][2] is not None:  # проверка гаризонт линий
+#                 self.highlight_winner(
+#                     row1=i, col1=0,
+#                     row2=i, col2=1,
+#                     row3=i, col3=2,
+#                 )
+#                 winner = self.current_player
+#                 self.write_results_to_file(player_1='X', player_2='O', winner=winner)
+#                 return True
+# 
+#             elif self.board[0][i] == self.board[1][i] == self.board[2][i] is not None:  # проверка вертикали линий
+#                 self.highlight_winner(
+#                     row1=0, col1=i,
+#                     row2=1, col2=i,
+#                     row3=2, col3=i,
+#                 )
+#                 winner = self.current_player
+#                 self.write_results_to_file(player_1='X', player_2='O', winner=winner)
+#                 return True
+# 
+#         if self.board[0][0] == self.board[1][1] == self.board[2][2] is not None:  # проверка диоганальных линий
+#             self.highlight_winner(
+#                 row1=0, col1=0,
+#                 row2=1, col2=1,
+#                 row3=2, col3=2,
+#             )
+#             winner = self.current_player
+#             self.write_results_to_file(player_1='X', player_2='O', winner=winner)
+#             return True
+# 
+#         elif self.board[2][0] == self.board[1][1] == self.board[0][2] is not None:  # проверка 2-диоганальных линий
+#             self.highlight_winner(
+#                 row1=2, col1=0,
+#                 row2=1, col2=1,
+#                 row3=0, col3=2,
+#             )
+#             winner = self.current_player
+#             self.write_results_to_file(player_1='X', player_2='O', winner=winner)
+#             return True
+# 
+#     def write_results_to_file(self, player_1, player_2, winner):
+#         """
+#         запись результатов в файле
+#         :param player_1: игрок номер
+#         :param player_2: игрок номер
+#         :param winner: победил
+#         :return: результат
+#         """
+#         current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#         with open('results.txt', 'a', encoding='utf-8') as file:
+#             file.write(f'{current_time}, {player_1} vs {player_2} Победил {winner}\n')
+# 
+#         self.update_scores()
+# 
+#     @staticmethod
+#     def get_player_score(player_name):
+#         """
+#         олучение количество очков игрока
+#         :param player_name: имя игрока
+#         :return:
+#         """
+#         with open('results.txt', "r", encoding='utf-8') as file:
+#             player_wins = 0
+#             for line in file:
+#                 if f"Победил {player_name}" in line:
+#                     player_wins += 1
+#         print(player_wins)
+#         return player_wins
+# 
+# 
+# if __name__ == '__main__':
+#     app = TicTacToe()
+#     app.mainloop()
