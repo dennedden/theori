@@ -690,7 +690,110 @@ laudfohhfolhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 #         print(player_wins)
 #         return player_wins
 # 
+# # ///////////\\\\\\\\\\\///////////////////////////////////////////////////////////////////////////
+# import os
+# from tkinter import * #не надо tk
+# from Kandynsky_API import *
+# import base64
 # 
+# root = Tk()
+# root.geometry('500x300+830+520')#размеры
+# root.title('Гоша')# Я ДАЛ ЕМУ ИМЯ
+# icon = PhotoImage(file="ai.png")
+# root.iconphoto(True, icon)#азначаю икону
+# root.resizable(False, False)#бан на изменение
+# # root.title = Image.open("ai.png")#путь к картине
+# # root.notepad_icon = root.notepad_icon.resize((200, 200))#маштаб
+# # root.notepad_icon_tk = Image.PhotoImage(root.notepad_icon)# приведение к нужному фамата
+# root.config(background="#000000")
+# 
+# 
+# 
+# entry = Entry(font="Segoe", bg='#3f3f40', border=0, fg="#b5b5b5")#закрасил виджет
+# entry.place(x=10, y=10, width=450, height=30)#размешение виджета
+# 
+# def click():
+#     api = Text2ImageAPI('https://api-key.fusionbrain.ai/', '76A96B7FA5CFDAA74BD10E6E2508557E',
+#                         '7FEA56A0882D80EBA4819D6A423A790D')
+#     model_id = api.get_model()
+#     uuid = api.generate(entry.get(), model_id)
+#     images = api.check_generation(uuid)
+#     base64_img = str(images)
+#     img_bytes = base64_img.encode('utf-8')
+#     with open('den.png', 'wb') as file: #сохраняю фаел||||||| sun in the sky
+#         decode = base64.decodebytes(img_bytes)
+#         file.write(decode)
+#     os.startfile('den.png')
+# #print(images)
+# 
+# btn = Button()
+# btn_icon = PhotoImage(file='tyty.png')
+# btn = Button(image=btn_icon, bg='#3f3f40', activebackground='#3f6f40', border=0,
+#              command=click)
+# btn.place(x=465, y=10, width=30, height=30)
+# 
+# 
+# 
+# root.mainloop()#безконечно кружимся
+# \||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# import json
+# import time
+# 
+# import requests
+# 
+# 
+# class Text2ImageAPI:
+# 
+#     def __init__(self, url, api_key, secret_key):
+#         self.URL = url
+#         self.AUTH_HEADERS = {
+#             'X-Key': f'Key {api_key}',
+#             'X-Secret': f'Secret {secret_key}',
+#         }
+# 
+#     def get_model(self):
+#         response = requests.get(self.URL + 'key/api/v1/models', headers=self.AUTH_HEADERS)
+#         data = response.json()
+#         return data[0]['id']
+# 
+#     def generate(self, prompt, model, images=1, width=1024, height=1024):
+#         params = {
+#             "type": "GENERATE",
+#             "numImages": images,
+#             "width": width,
+#             "height": height,
+#             "generateParams": {
+#                 "query": f"{prompt}"
+#             }
+#         }
+# 
+#         data = {
+#             'model_id': (None, model),
+#             'params': (None, json.dumps(params), 'application/json')
+#         }
+#         response = requests.post(self.URL + 'key/api/v1/text2image/run', headers=self.AUTH_HEADERS, files=data)
+#         data = response.json()
+#         return data['uuid']
+# 
+#     def check_generation(self, request_id, attempts=10, delay=10):
+#         while attempts > 0:
+#             response = requests.get(self.URL + 'key/api/v1/text2image/status/' + request_id, headers=self.AUTH_HEADERS)
+#             data = response.json()
+#             if data['status'] == 'DONE':
+#                 return data['images']
+# 
+#             attempts -= 1
+#             time.sleep(delay)
+# 
+# 
+# if __name__ == '__main__':
+#     api = Text2ImageAPI('https://api-key.fusionbrain.ai/', '76A96B7FA5CFDAA74BD10E6E2508557E', '7FEA56A0882D80EBA4819D6A423A790D')
+#     model_id = api.get_model()
+#     uuid = api.generate("Sun in sky", model_id)
+#     images = api.check_generation(uuid)
+#     print(images)
+# 
+# #Не забудьте указать именно ваш YOUR_KEY и YOUR_SECRET.
 # if __name__ == '__main__':
 #     app = TicTacToe()
 #     app.mainloop()
