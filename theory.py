@@ -794,6 +794,66 @@ laudfohhfolhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 #     print(images)
 # 
 # #Не забудьте указать именно ваш YOUR_KEY и YOUR_SECRET.
+# from tkinter import *
+# import PIL
+# from PIL import ImageTk, Image
+# root = Tk()
+# root.geometry('900x600+510+240')
+
+# data = []
+# with open('aaaaa5', mode='r', encoding='UTF-8') as file:
+#     for line in file.readlines():
+#         data.append(line.strip())
+
+# root.title(data[0])
+# icon = PhotoImage(file=data[1])
+# root.iconphoto(True, icon)
+
+# question = []
+# answ1 = []
+# answ2 = []
+# answ3 = []
+# answ4 = []
+# check_answ = []
+
+# numb_questions = (len(data) - 3)//6
+
+# img = Image.open(data[1])
+# img = img.resize((400, 400))
+# img = ImageTk.PhotoImage(img)
+# image = Label(root, image=img)
+# image.place(width=400, height=400, x=480, y=100)
+
+# for i in range(3, 6*numb_questions+3, 6):
+#     question.append(data[i])
+#     answ1.append(data[i+1])
+#     answ2.append(data[i+2])
+#     answ3.append(data[i+3])
+#     answ4.append(data[i+4])
+#     check_answ.append(data[i+5])
+
+# question_label = Label(root, text=question[0], bg='red',
+#                        font='Times 20', anchor='w', wraplength=400)
+# question_label.place(x=20, y=100, width=400, height=100)
+
+# answ1_label = Button(root, text='1) Да', bg='red',
+#                        font='Times 20', anchor='w', )
+# answ1_label.place(x=20, y=230, width=400, height=100)
+
+# answ2_label = Button(root, text='2) Нет(ложь)', bg='red',
+#                        font='Times 20', anchor='w', )
+# answ2_label.place(x=20, y=300, width=400, height=100)
+
+# answ3_label = Button(root, text='3) Конечно', bg='red',
+#                        font='Times 20', anchor='w', )
+# answ3_label.place(x=20, y=370, width=400, height=100)
+
+# answ4_label = Button(root, text='4) Естественно', bg='red',
+#                        font='Times 20', anchor='w', )
+# answ4_label.place(x=20, y=450, width=400, height=100)
+
+
+# root.mainloop()
 # if __name__ == '__main__':
 #     app = TicTacToe()
 #     app.mainloop()
