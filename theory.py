@@ -857,3 +857,138 @@ laudfohhfolhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # if __name__ == '__main__':
 #     app = TicTacToe()
 #     app.mainloop()
+import tkinter as tk
+from tkinter import messagebox
+import random
+from PIL import Image, ImageTk
+
+# Функция для установки изображения в качестве фона
+def set_background_image(window, image_path):
+    img = Image.open(image_path)
+    img = ImageTk.PhotoImage(img)
+    background_label = tk.Label(window, image=img)
+    background_label.image = img  # Сохраняем ссылку на изображение
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+    return background_label
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.points = 0
+
+    def add_points(self, points):
+        self.points += points
+
+class Game:
+    def __init__(self, player):
+        self.player = player
+        self.root = tk.Tk()
+        self.root.title("Игра Думсдейв")
+        self.root.geometry("600x600")
+
+        # Установка заднего фона
+        background_path = "background.jpg"  # Путь к вашему изображению фона
+        set_background_image(self.root, background_path)
+
+        self.label = tk.Label(self.root, text=f"Добро пожаловать, {self.player.name}!")
+        self.label.pack()
+
+        self.button_guess = tk.Button(self.root, text="Угадай число", command=self.play_guess_the_number)
+        self.button_guess.pack()
+
+        self.button_tic_tac_toe = tk.Button(self.root, text="Крестики-нолики", command=self.play_tic_tac_toe)
+        self.button_tic_tac_toe.pack()
+
+        self.root.mainloop()
+
+    def play_guess_the_number(self):
+        game_window = tk.Toplevel(self.root)
+        game_window.title("Угадай число")
+        game_window.geometry("300x200")
+
+        number_to_guess = random.randint(1, 100)
+        attempts = 0
+        max_attempts = 10
+
+        def guess_number():
+            nonlocal attempts
+            nonlocal number_to_guess
+            guess = int(guess_entry.get())
+            attempts += 1
+            if guess == number_to_guess:
+                messagebox.showinfo("Победа", "Поздравляем, вы угадали!")
+                self.player.add_points(10)
+                game_window.destroy()
+            elif attempts >= max_attempts:
+                messagebox.showinfo("Игра окончена", f"Вы исчерпали все попытки. Загаданное число было {number_to_guess}.")
+                game_window.destroy()
+            else:
+                messagebox.showinfo("Неверно", "Загаданное число больше." if guess < number_to_guess else "Загаданное число меньше.")
+
+        guess_label = tk.Label(game_window, text=f"Угадайте число от 1 до 100. У вас есть {max_attempts} попыток.")
+        guess_label.pack()
+
+        guess_entry = tk.Entry(game_window)
+        guess_entry.pack()
+
+        guess_button = tk.Button(game_window, text="Проверить", command=guess_number)
+        guess_button.pack()
+
+    def play_tic_tac_toe(self):
+        game_window = tk.Toplevel(self.root)
+        game_window.title("Крестики-нолики")
+        game_window.geometry("300x300")
+
+        self.board = [['' for _ in range(3)] for _ in range(3)]
+        self.buttons = [[None for _ in range(3)] for _ in range(3)]
+        self.turn = 'X'
+
+        for i in range(3):
+            for j in range(3):
+                button = tk.Button(game_window, text='', font=('normal', 40), height=1, width=3,
+                                   command=lambda i=i, j=j: self.make_move(i, j, game_window))
+                button.grid(row=i, column=j)
+                self.buttons[i][j] = button
+
+    def make_move(self, i, j, game_window):
+        if self.board[i][j] == '' and not self.check_winner():
+            self.board[i][j] = self.turn
+            self.buttons[i][j].config(text=self.turn)
+            if self.check_winner():
+                messagebox.showinfo("Победа", f"Победил игрок {self.turn}!")
+                self.player.add_points(10)
+                self.reset_game(game_window)
+            elif self.check_draw():
+                messagebox.showinfo("Ничья", "Ничья!")
+                self.reset_game(game_window)
+            else:
+                self.turn = 'O' if self.turn == 'X' else 'X'
+
+    def check_winner(self):
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] != '':
+                return True
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] != '':
+                return True
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != '':
+            return True
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != '':
+            return True
+        return False
+
+    def check_draw(self):
+        for row in self.board:
+            if '' in row:
+                return False
+        return True
+
+    def reset_game(self, game_window):
+        for i in range(3):
+            for j in range(3):
+                self.board[i][j] = ''
+                self.buttons[i][j].config(text='')
+        game_window.destroy()
+
+# Создание игрока и запуск игры
+player = Player("Игрок")
+game = Game(player)
